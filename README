@@ -15,22 +15,49 @@ Installing the kernel module.
 First you need to install dkms on your system.
 
 On a debian or ubuntu this is as simple as (as root):
-# apt-get install dkms
+
+```shell
+sudo apt install dkms
+sudo apt install --reinstall linux-headers-$(uname -r)
+```
+
 
 You can then descend into the awusb/ directory and just run:
 > make
 
 Then copy it over to to your kernel modules:
-# cp awusb.ko /lib/modules/`uname -r`/kernel/
+```shell
+sudo mkdir -p /lib/modules/`uname -r`/kernel/awusb/
+sudo cp awusb.ko /lib/modules/`uname -r`/kernel/awusb/
+```
 
 Load the module by running:
+
+```shell
 # modprobe awusb
+sudo modprobe /lib/modules/`uname -r`/kernel/awusb/awusb.ko
+```
+
+Install dependencies libpng12 and libusb-1.0-0-dev:
+
+```shell
+# sudo apt install libpng12-0 libusb-1.0-0-dev
+wget http://archive.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb
+# sudo dpkg -i libpng12-0_1.2.54-1ubuntu1.1_amd64.deb
+dpkg-deb -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb ./libpng12_tmp
+sudo cp ./libpng12_tmp/lib/x86_64-linux-gnu/libpng12.so.0* /usr/lib/x86_64-linux-gnu/
+sudo ldconfig
+```
+
+```shell
+sudo apt-get install lua5.1
+```
 
 Running LiveSuit.
 -----------------
 
 Just run the top level script:
-> ./LiveSuit.sh
+> sudo ./LiveSuit.sh
 
 This will determine whether your system is x86 or x86-64 and will then
 start the right binary.

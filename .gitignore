@@ -5,3 +5,7 @@ awusb/*.ko
 awusb/*.mod.c
 awusb/*.o
 awusb/modules.order
+x86-64/tools.scj
+x86-64/livesuit.ini
+libpng12_tmp/
+awusb/awusb.mod
